@@ -10,6 +10,7 @@ import com.example.realtimeweather.api.RetrofitInstance
 import com.example.realtimeweather.api.WeatherModel
 import com.example.realtimeweather.api.NetworkResponse
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class WeatherViewModel : ViewModel() {
 
@@ -34,9 +35,9 @@ class WeatherViewModel : ViewModel() {
                     _weatherResult.value = NetworkResponse.Error("Failed to load data: ${response.message()}")
                     Log.e("WeatherViewModel", "Failed to load data: ${response.message()}")
                 }
-            } catch (e: Exception) {
-                _weatherResult.value = NetworkResponse.Error("Exception: ${e.message}")
-                Log.e("WeatherViewModel", "Exception occurred: ${e.message}", e)
+            } catch (e: IOException) {
+                _weatherResult.value = NetworkResponse.Error("Network error: ${e.message}")
+                Log.e("WeatherViewModel", "Network error occurred: ${e.message}", e)
             }
         }
     }
